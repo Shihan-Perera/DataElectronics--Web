@@ -1,0 +1,332 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+<!-- Page Loader -->
+{% block title %} Dashboard {% endblock title %}
+
+{% block content %}
+<!-- Main Content -->
+
+<section class="content">
+    <div class="block-header">
+
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Dashboard</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Data Electronics</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ul>
+                <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card widget_2 big_icon ">
+                    <div class="body">
+                        <h6>Sales</h6>
+                        <a href="{% url 'new-sale'%}" class="btn btn-primary btn-block"><i class="zmdi zmdi-plus"></i><span> New Invoce</span></a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card widget_2 big_icon ">
+                    <div class="body">
+                        <h6>Purchases</h6>
+                        <a href="{% url 'select-supplier'%}" class="btn btn-success btn-block"><i class="zmdi zmdi-truck"></i><span> New Stock</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card widget_2 big_icon ">
+                    <div class="body">
+                        <h6>Inventory</h6>
+                        <a href="{% url 'inventory' %}" class="btn btn-warning btn-block"><i class="zmdi zmdi-storage"></i><span> Available Stock</span></a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card widget_2 big_icon ">
+                    <div class="body">
+                        <h6>Employees</h6>
+                        <a href="mail-compose.html" class="btn btn-orange btn-block"><i class="zmdi zmdi-accounts"></i><span>  Attendence</span></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="header">
+                      <h2><strong><i class="zmdi zmdi-chart"></i> Recent</strong> Items</h2>
+
+                  </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-lg-6 col-md-6 ">
+                <div class="card w_data_1">
+                  <div class="body">
+                      <h6 style="color: #FF9948;">RECENT INVOICES</h6>
+                      <br>
+                      {% for item in sales %}
+                          {% if not forloop.first %}
+                              <br><div style="border-bottom: 0.5px solid #fff"></div><br>
+                          {% endif %}
+                          <div class="row">
+                              <div class="col-md-8" align="left">
+                                  <a href="{% url 'sale-bill' item.billno %}">Bill No: {{ item.billno }}</a> <br>
+                                  Purchased by : {{ item.name }} <br>
+                                  <small> {{ item.time.date }}</small>
+                              </div>
+                              <div class="col-md-4"> LKR : {{ item.get_total_price }} <br> <br> <a href="{% url 'sale-bill' item.billno %}"><i class="zmdi zmdi-open-in-new"></i></a> </div>
+                          </div>
+                          <hr>
+                      {% endfor %}
+
+                  </div>
+                </div>
+             </div>
+             <div class="col-lg-6 col-md-6 ">
+                 <div class="card w_data_1">
+                     <div class="body ">
+
+                         <h6 style="color: #FF9948;">RECENT STOCK PURCHASES</h6>
+                           <br>
+                           {% for item in purchases %}
+                               {% if not forloop.first %}
+                                   <br><div style="border-bottom: 0.5px solid #fff"></div><br>
+                               {% endif %}
+                               <div class="row ">
+                                   <div class="col-md-8" align="left">
+                                       <a href="{% url 'purchase-bill' item.billno %}">Bill No: {{ item.billno }}</a> <br>
+                                       Purchased from : {{ item.supplier.name }} <br>
+                                       <small>{{ item.time.date }}</small>
+                                   </div>
+                                   <div class="col-md-4"> LKR : {{ item.get_total_price }} <br> <br> <a href="{% url 'purchase-bill' item.billno %}"><i class="zmdi zmdi-open-in-new"></i></a> </div>
+                               </div>
+                               <hr>
+                           {% endfor %}
+
+                     </div>
+                 </div>
+              </div>
+
+
+
+
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong><i class="zmdi zmdi-chart"></i> Sales Report</strong> Data Electronics </h2>
+                        <ul class="header-dropdown">
+
+
+                        </ul>
+                    </div>
+                    <div class="body mb-2">
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="state_w1 mb-1 mt-1">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <span><i class="zmdi zmdi-balance"></i>&nbsp; Revenue Today</span>
+                                            <h5>LKR : {{total_sales.total__sum}}</h5>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="state_w1 mb-1 mt-1">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <span><i class="zmdi zmdi-accounts-outline"></i>&nbsp; Today </span><br>
+                                            <h5>{{today_customers}} Customers </h5>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="state_w1 mb-1 mt-1">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                          <span><i class="zmdi zmdi-inbox"></i>&nbsp;  Today </span>
+
+                                            <h5>{{today_purchases}} Purchases</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="state_w1 mb-1 mt-1">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                          <span><i class="zmdi zmdi-accounts-list"></i>&nbsp;  Today Employees</span>
+
+                                            <h5>10 Working</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div  class="c3_chart d_sales"><canvas id="bar-graph"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-md-12 col-lg-8">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Visitors</strong> Statistics</h2>
+                        <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right slideUp">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else</a></li>
+                                </ul>
+                            </li>
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div id="world-map-markers" class="jvector-map"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Distribution</strong></h2>
+                        <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right slideUp">
+                                    <li><a href="javascript:void(0);">Edit</a></li>
+                                    <li><a href="javascript:void(0);">Delete</a></li>
+                                    <li><a href="javascript:void(0);">Report</a></li>
+                                </ul>
+                            </li>
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body text-center">
+                        <div id="chart-pie" class="c3_chart d_distribution"></div>
+                        <button class="btn btn-primary mt-4 mb-4">View More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Traffic</strong> Source</h2>
+                        <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right slideUp">
+                                    <li><a href="javascript:void(0);">Edit</a></li>
+                                    <li><a href="javascript:void(0);">Delete</a></li>
+                                    <li><a href="javascript:void(0);">Report</a></li>
+                                </ul>
+                            </li>
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-6 col-sm-12">
+
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <span> More than 30% percent of users come from direct links. Check details page for more information.</span>
+                                <div class="progress mt-4">
+                                    <div class="progress-bar l-amber" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;"></div>
+                                </div>
+                                <div class="d-flex bd-highlight mt-4">
+                                    <div class="flex-fill bd-highlight">
+                                        <h5 class="mb-0">21,521 <i class="zmdi zmdi-long-arrow-up"></i></h5>
+                                        <small>Today</small>
+                                    </div>
+                                    <div class="flex-fill bd-highlight">
+                                        <h5 class="mb-0">%12.35 <i class="zmdi zmdi-long-arrow-down"></i></h5>
+                                        <small>Last month %</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/Chart.min.js' %}"></script>
+    <script>
+        Chart.defaults.global.defaultFontColor = '#000000';
+
+        //configuration for the bar graph
+        var barConfig = {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    barThickness: 26,
+                    backgroundColor: '#667add',
+                    label: 'Available Stock in Inventory',
+                    data: {{ data|safe }},
+                }],
+                labels: {{ labels|safe }}
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        };
+
+
+        //runs all charts on loading the webpage
+        window.onload = function() {
+            var ctx = document.getElementById('bar-graph').getContext('2d');
+            window.BarStock = new Chart(ctx, barConfig);
+        };
+
+
+    </script>
+
+
+
+</section>
+
+
+
+
+
+{% endblock content %}

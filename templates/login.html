@@ -1,0 +1,118 @@
+{% block content %}
+{%load static %}
+﻿<!doctype html>
+<html class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Data Electronics-Point of Sale System.">
+<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon"> <!-- Favicon-->
+<title> Data Electronics | Sign In</title>
+<!-- Favicon-->
+
+
+<!-- Custom Css -->
+<link rel="stylesheet" href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/style.min.css' %}">
+
+<style>
+.alert {
+  padding: 5px;
+  background-color: rgba(237, 42, 12, 0.73); /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+
+
+</style>
+</head>
+
+
+
+<body class="theme-blush">
+
+
+<div class="authentication">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12">
+              {% if messages %}
+                  {% for message in messages %}
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert" align="center">
+                    <strong>{{ message }}!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+
+                  {% endfor %}
+              {% endif %}
+
+
+              <form class="card auth_form" method="post">
+                    {% csrf_token %}
+                  <div class="header">
+                      <img class="logo" src="{% static 'assets/images/logo.svg' %}" alt="">
+                      <h5>Data Electronics <br> Log in</h5>
+                  </div>
+                  <div class="body">
+                      <div class="input-group mb-3">
+                          <input type="text" class="form-control" placeholder="Username" required="" name="username" id="username">
+                          <div class="input-group-append">
+                              <span class="input-group-text"><i class="zmdi zmdi-account-circle"></i></span>
+                          </div>
+                      </div>
+                      <div class="input-group mb-3">
+                          <input type="password" class="form-control" placeholder="Password" required="" name="password" id="password">
+
+                          <div class="input-group-append">
+                              <span class="input-group-text"><a href="#" class="forgot" title="Forgot Password"><i class="zmdi zmdi-lock"></i></a></span>
+                          </div>
+                      </div>
+
+
+                      <button type="submit" class="btn btn-primary btn-block waves-effect waves-light">SIGN IN</button>
+
+                  </div>
+              </form>
+                <div class="copyright text-center">
+                    &copy;
+                    <script>document.write(new Date().getFullYear())</script>,
+                    <span>Designed by <a href="#" target="_blank">Fine Crew</a></span>
+                </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+                <div class="card">
+                    <img src="{% static 'assets/images/signin.svg' %}" alt="Sign In"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Jquery Core Js -->
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Purchases Bill No : {{ bill.billno }}{% endblock title %}
+
+
+{% block content %}
+
+
+<!-- Main Content -->
+
+<section class="content">
+  <div class="body_scroll">
+      <div class="block-header">
+          <div class="row">
+              <div class="col-lg-7 col-md-6 col-sm-12">
+                  <h2>Purchase Bill</h2>
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Data Electronics </a></li>
+                      <li class="breadcrumb-item"><a href="javascript:void(0);">Purchase Bill</a></li>
+                      <li class="breadcrumb-item active">Bill No {{ bill.billno }}</li>
+
+                  </ul>
+                  <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+              </div>
+              <div class="col-lg-5 col-md-6 col-sm-12">
+                  <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
+              </div>
+          </div>
+      </div>
+      <div class="container-fluid">
+          <!-- Vertical Layout -->
+          <div class="row clearfix">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+
+                  <div class="card">
+                      <div class="header">
+                          <h2><strong>Purchase Bill</strong> : <b>{{ bill.billno }}</b></h2>
+
+                      </div>
+                      <div class="body">
+
+
+                            <form method="post">
+                            {% csrf_token %}
+
+                                <div class="bg">
+
+                                    <br><br>
+
+                                    <div id="printArea" class="bg">
+                                      <div class="table table-bordered">
+
+
+                                        <table class="table" style="width: 800px; margin-left: auto; margin-right: auto;">
+                                            <tbody>
+
+                                                <tr style="height: 1px;">
+                                                    <td> <p style="text-align: center;">Purchase Receipt</p> </td>
+                                                </tr>
+
+                                                <tr style="text-align: center;">
+                                                    <td >
+                                                        <span style="font-size: 250%; font-weight: bold;">Data Electronics (Private) Limited</span> <br>
+                                                        <span style="font-size: 120%; font-weight: bold; ;">DEALERS IN : CCTV Systems, Security Alarm Systems, Fire Alarm Systems, Guard Tour Systems & Access Control Systems.</span> <hr>
+                                                        <span style="text-decoration: underline; font-weight: bold;">301A, Attidiya Main Road,</span> Attidiya <br> Dehiwala , Sri Lanka<br>
+                                                        <span>EMAIL :</span> <span style="text-decoration: underline; font-weight: bold;">datae@eureka.lk/data_e@sltnet.lk</span> <br><br>
+                                                        <span>Hot Line :</span> <span style="text-decoration: underline; font-weight: bold;">+94 777 487 644</span> <br><br>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                    <table class="outer-box" style="width: 800px; margin-left: auto; margin-right: auto;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="inner-box" style="text-align: center; font-weight: bold;" colspan="3">Issue Date {{ bill.time.date }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="inner-box" style="width: 50%; font-weight: bold;">&nbsp;NAME OF CONSIGNEE / BUYER</td>
+                                                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;INVOICE NO</td>
+                                                                <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.billno }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="inner-box" style="width: 50%;">&nbsp;{{ bill.supplier.name }}</td>
+                                                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;DATE</td>
+                                                                <td class="inner-box" style="width: 25%;">&nbsp;{{ bill.time.date }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="inner-box" style="width: 50%;" rowspan="3">{{ bill.supplier.address|linebreaks }}</td>
+                                                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;BOX NO</td>
+                                                                <td class="inner-box align-middle" style="width: 25%;"> <input type="text" name="eway" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.eway %}{{ billdetails.eway }}{% endif %}"> </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;VEH NO</td>
+                                                                <td class="inner-box align-middle" style="width: 25%;"> <input type="text" name="veh" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.veh %}{{ billdetails.veh }}{% endif %}"> </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;FROM</td>
+                                                                <td class="inner-box align-middle" style="width: 25%;"> <input type="text" name="destination" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.destination %}{{ billdetails.destination }}{% endif %}"> </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="inner-box" style="font-weight: bold;">&nbsp;Supplier Phone : {{ bill.supplier.phone }}</td>
+                                                                <td class="inner-box" style="width: 25%; font-weight: bold;">&nbsp;PO NO &amp; DATE</td>
+                                                                <td class="inner-box align-middle" style="width: 25%;"> <input type="text" name="po" class="align-middle" style="border: 0; overflow: hidden;" value="{% if billdetails.po %}{{ billdetails.po }}{% endif %}"> </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                    <table class="outer-box" style="width: auto; margin-left: auto; margin-right: auto;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="inner-box" style="width: 05%; font-weight: bold; text-align: center;">&nbsp;NO</td>
+                                                                <td class="inner-box" style="width: 30%; font-weight: bold; text-align: left;">DESCRIPTION OF THE GOODS</td>
+
+                                                                <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">QTY MTS</td>
+                                                                <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">PRICE PER</td>
+                                                                <td class="inner-box" style="width: 12%; font-weight: bold; text-align: center;">AMOUNT RS</td>
+                                                                <td class="inner-box" style="width: 05%; font-weight: bold; text-align: center;">PS</td>
+                                                            </tr>
+                                                            {% for item in items %}
+                                                                <tr style="height: auto;">
+                                                                    <td class="inner-box" style="width: 5%;">&nbsp; {{ forloop.counter }}</td>
+                                                                    <td class="inner-box" style="width: 30%;">&nbsp; {{ item.stock.name }}</td>
+
+                                                                    <td class="inner-box" style="width: 12%; text-align: center;">&nbsp; {{ item.quantity }}</td>
+                                                                    <td class="inner-box" style="width: 12%; text-align: center;">&nbsp; {{ item.perprice }}</td>
+                                                                    <td class="inner-box" style="width: 12%; text-align: center;">&nbsp;{{ item.totalprice }}</td>
+                                                                    <td class="inner-box" style="width: 5%;  text-align: center;">&nbsp;0</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                    <table class="outer-box inner-box" style="width: 800px; margin-left: auto; margin-right: auto;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="inner-box" style="width: 35%; text-align: left;" rowspan="6">
+                                                                    <p> <span style="font-weight: bold;">BANK DETAILS <br> <input type="text" name="bank" class="align-middle"  style="border: 0; overflow: hidden;" value="{% if billdetails.bank %}{{ billdetails.bank }} {% endif %}">
+                                                                       <br> AC NO-<input type="text" name="acno" class="align-middle"  style="border: 0; overflow: hidden;" value="{% if billdetails.acno %}{{ billdetails.acno }}{% endif %}">
+                                                                         </p>
+                                                                </td>
+                                                                <td class="inner-box" style="width: 30%; font-weight: bold;">&nbsp;Discount/Other</td>
+                                                                <td class="inner-box align-middle" style="width: 30%;">&nbsp; <input type="text" name="add" class="align-middle"  style="border: 0; overflow: hidden;" value="{% if billdetails.add %}{{ billdetails.add }}{% endif %}" ></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="inner-box" style="font-weight: bold;">&nbsp;TOTAL</td>
+                                                                <td class="inner-box align-middle">&nbsp; <input type="text" name="total" class="align-middle"  style="border: 0; overflow: hidden;" value="{% if billdetails.total %}{{ billdetails.total }} {% endif %}"> </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align: right;">
+                                                        <span style="font-weight: bold;">FOR COMPANY <br><br><br><br> Signature</span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="text-align: center;">
+                                                        FINAL TEXT
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                      </div>
+
+                                    </div>
+
+                                    <br><br>
+
+                                </div>
+
+                                <br><br>
+
+                                <div class="wrapper">
+                                    <button class="btn btn-raised btn-primary btn-round waves-effect" onclick="printpage('printArea')">Print</button>
+                                    <button class="btn btn-raised btn-success btn-round waves-effect" type="submit">Save Draft</button>
+                                    <a href="" class=" btn btn-raised btn-warning btn-round waves-effect">Go Back</a>
+                                </div>
+
+                            </form>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        function printpage(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+        </script>
+
+{% endblock %}

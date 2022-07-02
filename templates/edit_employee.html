@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+<!-- Page Loader -->
+{% block title %} New Employee {% endblock title %}
+
+{% block content %}
+<!-- Main Content -->
+
+<section class="content">
+  <div class="body_scroll">
+      <div class="block-header">
+          <div class="row">
+              <div class="col-lg-7 col-md-6 col-sm-12">
+                  <h2>Add Employee</h2>
+                  <br>
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Data Electronics </a></li>
+                      <li class="breadcrumb-item active">Add Employee</li>
+
+                  </ul>
+                  <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+              </div>
+              <div class="col-lg-5 col-md-6 col-sm-12">
+                  <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
+              </div>
+          </div>
+      </div>
+      <div class="container-fluid">
+          <!-- Vertical Layout -->
+          <div class="row clearfix">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+
+                  <div class="card">
+                      <div class="header">
+                          <h2><strong>Employee Details</strong> Form</h2>
+
+                      </div>
+                      <div class="body">
+                          <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+
+                            {{ form.name.errors }}
+                            {{ form.designation.errors }}
+                            {{ form.joined_date.errors }}
+                            {{ form.birth_date.errors }}
+                            {{ form.phone.errors }}
+                            {{ form.address.errors }}
+                            {{ form.email.errors }}
+                            {{ form.nic.errors }}
+                            {{ form.photo_main.errors }}
+
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">Employee Name</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">Designation</label>
+                                {{ form.designation }}
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">Birthday </label>
+                                {{ form.birth_date }}
+                            </div>
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">Phone</label>
+                                {{ form.phone }}
+                            </div>
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">Address</label>
+                                {{ form.address}}
+                            </div>
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">NIC No</label>
+                                {{ form.nic}}
+                            </div>
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">Date Joined</label>
+                                {{ form.joined_date }}
+                            </div>
+                            <div class="form-group">
+
+                                <label for="{{ form.name.id_for_label }}">Profile Picture</label>
+                                {{ form.photo_main}}
+                            </div>
+
+                              <br>
+
+                              <div class="align-middle">
+                                  <button type="submit" class="btn btn-raised btn-primary btn-round waves-effect">{{ savebtn }}</button>
+                                  {% if title == "New Stock" %}
+                                      <button type="reset" class="btn btn-raised btn-warning btn-round waves-effect" >Reset</button>
+                                  {% endif %}
+                                  {% if delbtn %}
+                                      <a href="{% url 'delete-employee' object.pk %}" class="btn btn-raised btn-danger btn-round waves-effect"> Delete Employee </a>
+                                  {% endif %}
+                                  <a href="" class="btn btn-raised btn-dark btn-round waves-effect">Cancel</a>
+                              </div>
+
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+{% endblock content %}
